@@ -1,0 +1,14 @@
+bin
+coverage
+scripts
+.vscode
+.idea
+docker
+debug/debug.env
+docker/*.output
+src/proto
+**/__debug*
+**/debug*
+src/vendor
+Makefile
+*.md

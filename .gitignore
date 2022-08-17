@@ -1,0 +1,13 @@
+.vscode
+/bin
+/coverage
+docker/*.output
+src/proto
+__debug_bin
+debug*
+launch.json
+src/vendor/
+.idea/
+*.exe
+*.log
+config.yaml
