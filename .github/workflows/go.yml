@@ -1,0 +1,42 @@
+name: Go
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  ci:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-2019]
+
+    runs-on: ${{ matrix.os }}
+    
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.17
+    - name: Set env
+      run: echo "CONFIG_PATH=$GITHUB_WORKSPACE >> $GITHUB_ENV"
+    - name: Install Windows packages
+      if: runner.os == 'Windows'
+      run: choco install make -y
+
+    - name: Build
+      run: make build
+
+    - name: Test
+      run: make test && make coverage
+
+    - name: Upload Coverage report to CodeCov
+      uses: codecov/codecov-action@v1.0.0
+      with:
+        token: ${{secrets.CODECOV_TOKEN}}
+        file: ./coverage/coverage.out
