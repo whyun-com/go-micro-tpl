@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 env:
   CONFIG_PATH: /home/runner/work/go-micro-tpl/go-micro-tpl/config.example.yaml
-  DOCKER_DEFAULT_PLATFORM: linux/amd64
+  KAFKA_VERSION: 3.2.1
 jobs:
 
   ci:
@@ -24,9 +24,20 @@ jobs:
       if: runner.os == 'Windows'
       run: |
         choco install make -y
-        dir env:
-    - name: Start  Kafka
+        echo $env:PATH
+    - name: Start  Kafka on Linux
+      if: runner.os != 'Windows'
       run: docker-compose up -d
+    - name: Start  Kafka on Windows
+      if: runner.os == 'Windows'
+      run: |
+        Invoke-WebRequest -uri https://downloads.apache.org/kafka/${KAFKA_VERSION}/kafka_2.12-${KAFKA_VERSION}.tgz -outfile kafka.tgz
+        7z.exe x .\kafka.tgz
+        7z.exe x .\kafka.tar
+        $base="kafka_2.12-${KAFKA_VERSION}"
+        Start-Process -NoNewWindow $base\bin\windows\zookeeper-server-start.bat $base\config\zookeeper.properties
+        Start-Sleep -Seconds 7
+        Start-Process -NoNewWindow $base\bin\windows\kafka-server-start.bat $base\config\server.properties
 
     - name: Set up Go
       uses: actions/setup-go@v3
