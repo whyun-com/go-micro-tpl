@@ -81,7 +81,7 @@ func init() {
 		CONFIG_PATH = DefaultConfigPath
 		// log.Info().Str("config file", CONFIG_PATH)
 	} else {
-		CONFIG_PATH = GetCurrentDirectory()
+		CONFIG_PATH = GetCurrentDirectory() + "/config.yaml"
 		// log.Info().Str("config file", CONFIG_PATH)
 		if CONFIG_PATH == "" || !findConfigFile((CONFIG_PATH)) {
 			log.Fatal().Str("尝试从", CONFIG_PATH).Msg("未找到yaml配置文件")
