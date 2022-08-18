@@ -23,11 +23,15 @@ jobs:
       uses: actions/setup-go@v2
       with:
         go-version: 1.17
+    - name: Start Bitname Kafka
+      uses: bbcCorp/kafka-actions@v1
     - name: Set env
-      run: echo "CONFIG_PATH=$GITHUB_WORKSPACE >> $GITHUB_ENV"
+      run: echo "CONFIG_PATH=${GITHUB_WORKSPACE}/config.example.yaml >> $GITHUB_ENV"
     - name: Install Windows packages
       if: runner.os == 'Windows'
-      run: choco install make -y
+      run: |
+        choco install make -y
+        dir env:
 
     - name: Build
       run: make build
