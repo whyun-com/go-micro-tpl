@@ -26,8 +26,8 @@ jobs:
       if: runner.os == 'Windows'
       run: |
         choco install make -y
-        refreshenv
-        echo $env:PATH
+        echo "CONFIG_PATH=${GITHUB_WORKSPACE}\config.example.yaml" >> $GITHUB_ENV
+
     - name: Start  Kafka on Linux
       if: runner.os != 'Windows'
       run: docker-compose up -d
