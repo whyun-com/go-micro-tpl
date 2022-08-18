@@ -1,8 +1,8 @@
 kafka:
   log:
-    brokers: 127.0.0.1:9892
+    brokers: 127.0.0.1:9092
   communication:
-    brokers: 127.0.0.1:9892
+    brokers: 127.0.0.1:9092
 redis:
   hosts:
     - 127.0.0.1:6379
