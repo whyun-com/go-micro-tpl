@@ -20,6 +20,11 @@ jobs:
     
     steps:
     - uses: actions/checkout@v3
+    - name: Set up MinGW
+      if: runner.os == 'Windows'
+      uses: egor-tensin/setup-mingw@v2
+      with:
+        platform: x64
     - name: Install Windows packages
       if: runner.os == 'Windows'
       run: |
