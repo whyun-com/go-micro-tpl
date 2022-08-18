@@ -60,8 +60,7 @@ test:check
 coverage:test
 	cd src && \
 	go tool cover -func ../coverage/coverage.out && \
-	go tool cover -html ../coverage/coverage.out -o ../coverage/index.html && \
-	scp -pr ../coverage $(COVERAGE_REPORT_DEST)
+	go tool cover -html ../coverage/coverage.out -o ../coverage/index.html
 
 run:check install
 	
