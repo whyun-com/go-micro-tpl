@@ -54,7 +54,9 @@ jobs:
       run: make build
 
     - name: Test
-      run: make test && make coverage
+      run: |
+        echo $CONFIG_PATH
+        make test && make coverage
 
     - name: Upload Coverage report to CodeCov
       uses: codecov/codecov-action@v1.0.0
