@@ -48,7 +48,7 @@ jobs:
         Invoke-WebRequest -uri $KAFKA_URL -outfile kafka.tgz
         7z.exe x .\kafka.tgz
         $kafkaDir="c:\"
-        7z.exe x .\kafka.tar -o${kafkaDir}
+        7z.exe x .\kafka.tar -o"${kafkaDir}""
         $base="${kafkaDir}kafka_2.12-${KAFKA_VERSION}"
         Start-Process -NoNewWindow $base\bin\windows\zookeeper-server-start.bat $base\config\zookeeper.properties
         Start-Sleep -Seconds 7
