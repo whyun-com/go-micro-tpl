@@ -52,6 +52,7 @@ jobs:
 
     - name: Upload Coverage report to CodeCov
       uses: codecov/codecov-action@v1.0.0
+      if: runner.os != 'Windows'
       with:
         token: ${{secrets.CODECOV_TOKEN}}
         file: ./coverage/coverage.out
