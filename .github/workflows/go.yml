@@ -53,6 +53,7 @@ jobs:
         Start-Process -NoNewWindow $base\bin\windows\zookeeper-server-start.bat $base\config\zookeeper.properties
         Start-Sleep -Seconds 7
         Start-Process -NoNewWindow $base\bin\windows\kafka-server-start.bat $base\config\server.properties
+
         $REDIS_URL="https://github.com/ServiceStack/redis-windows/raw/master/downloads/redis-latest.zip"
         Invoke-WebRequest -uri $REDIS_URL -outfile redis-latest.zip
         7z.exe x .\redis-latest.zip -oredis
