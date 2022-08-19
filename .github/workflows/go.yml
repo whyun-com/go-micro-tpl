@@ -44,7 +44,9 @@ jobs:
       run: make build
     - name: Check Kafka on Windows
       if: runner.os == 'Windows'
-      run: netstat -ano | findstr 9092
+      run: |
+        jps
+        netstat -ano | findstr 9092
     - name: Test
       run: |
         echo $CONFIG_PATH

@@ -18,3 +18,4 @@ Start-Process -NoNewWindow  redis\redis-server.exe redis\redis.windows.conf
 npm install -g wait-on
 wait-on tcp:6379
 wait-on tcp:9092
+netstat -ano | findstr 9092
