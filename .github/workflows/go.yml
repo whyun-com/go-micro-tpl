@@ -26,7 +26,7 @@ jobs:
       if: runner.os == 'Windows'
       run: |
         choco install make -y
-        echo "CONFIG_PATH=${GITHUB_WORKSPACE}\config.example.yaml" >> $GITHUB_ENV
+        echo "CONFIG_PATH=$env:GITHUB_WORKSPACE\config.example.yaml" >> $env:GITHUB_ENV
 
     - name: Start  Kafka on Linux
       if: runner.os != 'Windows'
