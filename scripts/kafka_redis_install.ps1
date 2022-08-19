@@ -15,6 +15,6 @@ $REDIS_URL = "https://github.com/ServiceStack/redis-windows/raw/master/downloads
 Invoke-WebRequest -uri $REDIS_URL -outfile redis-latest.zip
 7z.exe x .\redis-latest.zip -oredis
 Start-Process -NoNewWindow  redis\redis-server.exe redis\redis.windows.conf
-Start-Sleep -Seconds 3
-netstat -ano | findstr 9092
 netstat -ano | findstr 6379
+Start-Sleep -Seconds 7
+netstat -ano | findstr 9092
