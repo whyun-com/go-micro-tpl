@@ -22,11 +22,19 @@ jobs:
     # - name: Set up MinGW
     #   if: runner.os == 'Windows'
     #   run: echo "C:\ProgramData\Chocolatey\lib\mingw\tools\install\mingw64\bin" >> $GITHUB_PATH 
+    - name: Set up Go
+      uses: actions/setup-go@v3
+      with:
+        go-version: 1.17
     - name: Install Windows packages
       if: runner.os == 'Windows'
       run: |
         choco install make -y
         echo "CONFIG_PATH=$env:GITHUB_WORKSPACE\config.example.yaml" >> $env:GITHUB_ENV
+
+
+    - name: Build
+      run: make build
 
     - name: Start Kafka  on Linux
       if: runner.os != 'Windows'
@@ -34,6 +42,7 @@ jobs:
     - name: Start  Kafka and redis on Windows
       if: runner.os == 'Windows'
       run: |
+        Set-PSDebug -Trace 1
         $KAFKA_VERSION="3.2.1"
         $KAFKA_URL="https://downloads.apache.org/kafka/${KAFKA_VERSION}/kafka_2.12-${KAFKA_VERSION}.tgz"
         Invoke-WebRequest -uri $KAFKA_URL -outfile kafka.tgz
@@ -49,14 +58,6 @@ jobs:
         7z.exe x .\redis-latest.zip -oredis
         Start-Process -NoNewWindow  redis\redis-server.exe redis\redis.windows.conf
 
-    - name: Set up Go
-      uses: actions/setup-go@v3
-      with:
-        go-version: 1.17
-
-
-    - name: Build
-      run: make build
 
     - name: Test
       run: |
