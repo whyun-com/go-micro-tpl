@@ -11,3 +11,6 @@ src/vendor/
 *.exe
 *.log
 config.yaml
+*.tar
+*.zip
+*.tgz
