@@ -35,20 +35,18 @@ jobs:
     - name: Start Kafka  on Linux
       if: runner.os != 'Windows'
       run: docker-compose up -d
-    - name: Start  Kafka and redis on Windows
+    - name: Build
+      run: make build
+    - name: Test on Linux
+      if: runner.os != 'Windows'
+      run: |
+        echo $CONFIG_PATH
+        make test && make coverage
+
+    - name: Test on Windows
       if: runner.os == 'Windows'
       run: |
         scripts/kafka_redis_install.ps1
-
-    - name: Build
-      run: make build
-    - name: Check Kafka on Windows
-      if: runner.os == 'Windows'
-      run: |
-        jps
-        netstat -ano | findstr 9092
-    - name: Test
-      run: |
         echo $CONFIG_PATH
         make test && make coverage
 
