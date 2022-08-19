@@ -19,16 +19,16 @@ jobs:
     
     steps:
     - uses: actions/checkout@v3
-    - name: Set up MinGW
-      if: runner.os == 'Windows'
-      run: echo "C:\ProgramData\Chocolatey\lib\mingw\tools\install\mingw64\bin" >> $GITHUB_PATH 
+    # - name: Set up MinGW
+    #   if: runner.os == 'Windows'
+    #   run: echo "C:\ProgramData\Chocolatey\lib\mingw\tools\install\mingw64\bin" >> $GITHUB_PATH 
     - name: Install Windows packages
       if: runner.os == 'Windows'
       run: |
         choco install make -y
         echo "CONFIG_PATH=$env:GITHUB_WORKSPACE\config.example.yaml" >> $env:GITHUB_ENV
 
-    - name: Start  Kafka on Linux
+    - name: Start  Kafka and redis on Linux
       if: runner.os != 'Windows'
       run: docker-compose up -d
     - name: Start  Kafka on Windows
@@ -43,6 +43,10 @@ jobs:
         Start-Process -NoNewWindow $base\bin\windows\zookeeper-server-start.bat $base\config\zookeeper.properties
         Start-Sleep -Seconds 7
         Start-Process -NoNewWindow $base\bin\windows\kafka-server-start.bat $base\config\server.properties
+        $REDIS_URL="https://github.com/ServiceStack/redis-windows/raw/master/downloads/redis-latest.zip"
+        Invoke-WebRequest -uri $REDIS_URL -outfile redis-latest.zip
+        7z.exe x .\redis-latest.zip -oredis
+        Start-Process -NoNewWindow  redis\redis-server.exe redis\redis.windows.conf
 
     - name: Set up Go
       uses: actions/setup-go@v3
