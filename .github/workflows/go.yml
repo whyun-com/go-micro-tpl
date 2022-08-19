@@ -39,7 +39,7 @@ jobs:
       if: runner.os == 'Windows'
       run: |
         scripts/kafka_redis_install.ps1
-        netstat -ano | findstr 9092
+
     - name: Build
       run: make build
     - name: Check Kafka on Windows
